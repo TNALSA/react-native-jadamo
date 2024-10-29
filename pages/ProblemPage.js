@@ -9,8 +9,8 @@ export default function ProblemPage({route}) {
         const readDB = async() => {      
           try {
             console.log("[Info]회차: "+route.params.name)
-            const docRef = getDoc(collection(db,'past_questions'), route.params.name);
-            console.log(docRef.id);
+            const docRef = doc(db,'past_questions', `${route.params.name}`);
+            const docSnap = await getDoc(docRef);          
 
             if(docSnap.exists()){
                 console.log("[Info]데이터: " + docSnap.data())
