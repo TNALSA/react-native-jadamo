@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Title from "../component/Title";
 import { collection, doc, getDoc } from 'firebase/firestore';
-import { View , StyleSheet, Text, Button} from "react-native";
+import { View , StyleSheet, Text, Button, Image} from "react-native";
 import { db } from '../firebaseConfig'
 import Item from "../component/Item";
 
@@ -19,7 +19,7 @@ export default function ProblemPage({route}) {
 
             if(docSnap.exists()){
                 const tempArr = [];
-                for(let i=1; i<=3; i++){
+                for(let i=1; i<=15; i++){
                   console.log("[Info]문제: " + docSnap.get(`${i}`));
                   tempArr.push(docSnap.get(`${i}`))
                 }
@@ -40,7 +40,7 @@ export default function ProblemPage({route}) {
       };
 
       return(
-        <View>
+        <View style={styles.container}>
           {/* {data.map((problem, idx) => (
             <View>
               <Title idx = {idx+1} question = {problem.question} />
@@ -51,7 +51,8 @@ export default function ProblemPage({route}) {
           {data.length > 0 && index < data.length && (
                 <View>
                     <Title idx={index + 1} question={data[index].question} />
-                    <Item answers={data[index].answers} />
+                    {data[index].image ? <Image source={require(`../assets/content-images/2024/0825/${(index + 1).png}`)}/> : null }
+                    <Item answers={data[index].answers}/>
                     <Button title="다음" onPress={handleNext} />
                 </View>
           )}
