@@ -1,7 +1,5 @@
 export default function Title(props) {
     return(
-        <h2>
-            문제 제목
-        </h2>
+        <h3>{props.idx}. {props.question}</h3>
     )
 }
