@@ -41,5 +41,6 @@ export default function ChoosePage({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+    backgroundColor: '#c9c9c9', // 배경색 추가
+  },
 })

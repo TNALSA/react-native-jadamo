@@ -7,6 +7,7 @@ import StartPage from './pages/StartPage';
 import ChoosePage from './pages/ChoosePage';
 import ProblemPage from './pages/ProblemPage'
 import AppContext from './Appcontext';
+import { useFonts } from 'expo-font';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,9 @@ export default function App() {
   const [data,setData] = useState([]);
   const [isConfirm, setIsConfirm] = useState(false);
   const [index, setIndex] = useState(0);
+  const [fontsLoaded] = useFonts({
+    Pixel: require("./assets/fonts/DungGeunMo.ttf")
+  });
 
   const setCheckedNumber = (num) => {
     setChecked(num);
@@ -43,6 +47,7 @@ export default function App() {
     image: image,
     isConfirm: isConfirm,
     data: data,
+    fontsLoaded: fontsLoaded,
     setConfirm,
     setImageURL,
     setIdx,

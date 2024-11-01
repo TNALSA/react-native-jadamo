@@ -6,17 +6,24 @@ import { TouchableOpacity, StyleSheet, Text } from "react-native";
 export default function ContentList(props) {
     const name = props.name;
     return(
-        <TouchableOpacity style = {styles.ContentList} onPress={() => props.navigation.navigate("ProblemPage", {name: name})}>
-            <Text>{name}</Text>
+        <TouchableOpacity style = {styles.contentlist} onPress={() => props.navigation.navigate("ProblemPage", {name: name})}>
+            <Text style={styles.contentlist_text}>{name}</Text>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    ContentList: {
-        backgroundColor: '#C1F2FE',
+    contentlist: {
+        borderStyle: 'solid',
+        borderWidth: 2,
         padding: 15,
         alignItems: 'center',
         width:'auto',
+        marginBottom:10,
+        backgroundColor: '#ededed'
+    },
+    contentlist_text:{
+        fontFamily: "Pixel",
+        fontSize: 20
     }
 })
