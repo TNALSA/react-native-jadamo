@@ -43,6 +43,7 @@ export default function ProblemPage({route}) {
       };
 
       const handleGetDownloadURL = (idx) => {
+        console.log(idx+"번 이미지 호출")
         const storage = getStorage();
         const fileRef = ref(storage, `2024년도 기출문제 3회 (2024-08-25)/${idx}.png`);
         try {
@@ -55,8 +56,8 @@ export default function ProblemPage({route}) {
         }
 
         return(
-          <View>
-            <Image source={{uri:image}} style={{ width: 'auto', height: 'auto'}} resizeMode="contain"/>
+          <View style={styles.imageView}>
+            <Image source={{uri:image}} style={styles.image} resizeMode="contain"/>
           </View>
         )
     };
@@ -64,12 +65,12 @@ export default function ProblemPage({route}) {
       return(
         <View style={styles.container}>   
           {data.length > 0 && index < data.length && (
-                <View>
-                    <Title idx={index + 1} question={data[index].question} />
-                    {data[index].image ? handleGetDownloadURL((index + 1)): null }
-                    <Item answers={data[index].answers}/>
-                    <Button title="다음" onPress={handleNext} />
-                </View>
+            <View>
+                <Title idx={index + 1} question={data[index].question} />
+                {data[index].image === true ? handleGetDownloadURL((index + 1)): null }
+                <Item answers={data[index].answers}/>
+                <Button title="다음" onPress={handleNext} />
+            </View>
           )}
         </View>
       );
@@ -78,15 +79,16 @@ export default function ProblemPage({route}) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    width: 'auto'
-  },
-  imageView:{
-    flex:1,
     width: 'auto',
-    height: 'auto'
+    alignItems:'center',
+    backgroundColor: '#dcdcdc'
   },
-  image:{
-    width: 'auto',
-    height: 'auto'
+  imageView: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  image: {
+    width: 400,
+    height: 400
   }
 })
