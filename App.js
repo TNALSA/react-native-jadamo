@@ -12,14 +12,42 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [checked, setChecked] = useState(1);
+  const [image,setImage] = useState();
+  const [data,setData] = useState([]);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [index, setIndex] = useState(0);
 
   const setCheckedNumber = (num) => {
     setChecked(num);
   }
 
+  const setIdx = (idx) => {
+    setIndex(idx);
+  }
+
+  const setImageURL = (value) => {
+    setImage(value);
+  }
+
+  const setConfirm = (value) => {
+    setIsConfirm(value)
+  }
+
+  const setQuestionData = (value) =>{
+    setData(value);
+  }
+
   const values = {
     checked: checked,
-    setCheckedNumber
+    index: index,
+    image: image,
+    isConfirm: isConfirm,
+    data: data,
+    setConfirm,
+    setImageURL,
+    setIdx,
+    setCheckedNumber,
+    setQuestionData
   }
 
   return (

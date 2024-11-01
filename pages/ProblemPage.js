@@ -11,10 +11,6 @@ import AppContext from "../Appcontext";
 
 
 export default function ProblemPage({route}) {
-    const [data,setData] = useState([]);
-    const [image,setImage] = useState();
-    const [isConfirm, setIsConfirm] = useState(false);
-    const [index, setIndex] = useState(0);
     const myContext = useContext(AppContext);
 
     useEffect(() => {
@@ -30,7 +26,7 @@ export default function ProblemPage({route}) {
                   console.log("[Info]문제: " + docSnap.get(`${i}`));
                   tempArr.push(docSnap.get(`${i}`))
                 }
-                setData(tempArr);
+                myContext.setQuestionData(tempArr);
             }else{
                 console.log("[Warn]No such document!")
             }
@@ -42,14 +38,8 @@ export default function ProblemPage({route}) {
         readDB();
       }, []);
 
-      const handleNext = () => {
-        setIndex(prevIndex => Math.min(prevIndex + 1, data.length - 1)); // 다음 인덱스 설정
-        setImage(null);
-        setIsConfirm(false);
-      };
-
       const confirmation = () => {
-        setIsConfirm(true);
+        myContext.setConfirm(true);
       }
 
       const handleGetDownloadURL = (idx) => {
@@ -57,34 +47,33 @@ export default function ProblemPage({route}) {
         const fileRef = ref(storage, `2024년도 기출문제 3회 (2024-08-25)/${idx}.png`);
         try {
             getDownloadURL(fileRef).then((fileURL) => {
-              setImage(fileURL);
+              myContext.setImageURL(fileURL);
             });
         } catch (error) {
             console.error("Error getting download URL: ", error);
-            setImage(null)
+            myContext.setImageURL(null)
         }
 
         return(
           <View style={styles.imageView}>
-            <Image source={{uri:image}} style={styles.image} resizeMode="contain"/>
+            <Image source={{uri:myContext.image}} style={styles.image} resizeMode="contain"/>
           </View>
         )
     };
 
       return(
         <View style={styles.container}>   
-          {data.length > 0 && index < data.length && (
+          {myContext.data.length > 0 && myContext.index < myContext.data.length && (
             <View>
-                <Title idx={index + 1} question={data[index].question} />
-                {data[index].image === true ? handleGetDownloadURL((index + 1)): null }
-                <Item answers = {data[index].answers}/>
-                <Button title="정답 확인" onPress={confirmation} disabled={isConfirm}/>
-                <Button title="다음" onPress={handleNext} />
+                <Title idx={myContext.index + 1} question={myContext.data[myContext.index].question} />
+                {myContext.data[myContext.index].image === true ? handleGetDownloadURL((myContext.index + 1)): null }
+                <Item answers = {myContext.data[myContext.index].answers}/>
+                <Button title="정답 확인" onPress={confirmation} disabled={myContext.isConfirm}/>
             </View>
           )}
 
           {/* 정답 확인 시 모달 창 출력 */}
-          {isConfirm ? <ConfirmPage correct = {data[index].result}/> : null}
+          {myContext.isConfirm ? <ConfirmPage correct = {myContext.data[myContext.index].result}/> : null}
         </View>
       );
 }

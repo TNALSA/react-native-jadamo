@@ -2,8 +2,15 @@ import { useContext } from "react"
 import { View, StyleSheet, Text, Button } from "react-native"
 import AppContext from "../Appcontext"
 
+
 export default function ConfirmPage(props){
     const myContext = useContext(AppContext);
+
+    const handleNext = () => {
+        myContext.setIdx(prevIndex => Math.min(prevIndex + 1, myContext.data.length - 1)); // 다음 인덱스 설정
+        myContext.setImageURL(null);
+        myContext.setConfirm(false);
+    };
 
     return(
         <View style={styles.confirmView}>
@@ -11,7 +18,7 @@ export default function ConfirmPage(props){
             <Text> 내가 고른 답: {myContext.checked}</Text>
             <Text> 정답: {props.correct}</Text>
             <View style={styles.nextBtnView}>
-                <Button title="다음 문제" style={styles.nextBtn} />
+                <Button title="다음 문제" style={styles.nextBtn} onPress={handleNext}/>
             </View>
         </View>
     )
