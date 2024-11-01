@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Title from "../component/Title";
-import { collection, doc, getDoc} from 'firebase/firestore';
+import { doc, getDoc} from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import { View , StyleSheet, Text, Button, Image} from "react-native";
 import { db } from '../firebaseConfig'
 import Item from "../component/Item";
+import ConfirmPage from "./ConfirmPage";
+import App from "../App";
+import AppContext from "../Appcontext";
 
 
 export default function ProblemPage({route}) {
     const [data,setData] = useState([]);
     const [image,setImage] = useState();
+    const [isConfirm, setIsConfirm] = useState(false);
     const [index, setIndex] = useState(0);
+    const myContext = useContext(AppContext);
 
     useEffect(() => {
         const readDB = async() => {      
@@ -40,10 +45,14 @@ export default function ProblemPage({route}) {
       const handleNext = () => {
         setIndex(prevIndex => Math.min(prevIndex + 1, data.length - 1)); // 다음 인덱스 설정
         setImage(null);
+        setIsConfirm(false);
       };
 
+      const confirmation = () => {
+        setIsConfirm(true);
+      }
+
       const handleGetDownloadURL = (idx) => {
-        console.log(idx+"번 이미지 호출")
         const storage = getStorage();
         const fileRef = ref(storage, `2024년도 기출문제 3회 (2024-08-25)/${idx}.png`);
         try {
@@ -68,10 +77,14 @@ export default function ProblemPage({route}) {
             <View>
                 <Title idx={index + 1} question={data[index].question} />
                 {data[index].image === true ? handleGetDownloadURL((index + 1)): null }
-                <Item answers={data[index].answers}/>
+                <Item answers = {data[index].answers}/>
+                <Button title="정답 확인" onPress={confirmation} disabled={isConfirm}/>
                 <Button title="다음" onPress={handleNext} />
             </View>
           )}
+
+          {/* 정답 확인 시 모달 창 출력 */}
+          {isConfirm ? <ConfirmPage correct = {data[index].result}/> : null}
         </View>
       );
 }
