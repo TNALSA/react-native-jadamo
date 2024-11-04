@@ -15,7 +15,7 @@ export default function Item(props) {
                     status={myContext.checked === 1 ? 'checked' : 'unchecked'}
                     onPress={() => myContext.setCheckedNumber(1)}
                 />
-                <Text>{props.answers[0]}</Text> {/* 텍스트 추가 */}
+                <Text style={styles.item_text}>{props.answers[0]}</Text> {/* 텍스트 추가 */}
             </View>  
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -24,7 +24,7 @@ export default function Item(props) {
                     status={ myContext.checked === 2 ? 'checked' : 'unchecked' }
                     onPress={() => myContext.setCheckedNumber(2)}
                 />
-                <Text>{props.answers[1]}</Text>
+                <Text style={styles.item_text}>{props.answers[1]}</Text>
             </View>
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -33,7 +33,7 @@ export default function Item(props) {
                     status={ myContext.checked === 3 ? 'checked' : 'unchecked' }
                     onPress={() => myContext.setCheckedNumber(3)}
                 />
-                <Text>{props.answers[2]}</Text>
+                <Text style={styles.item_text}>{props.answers[2]}</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <RadioButton
@@ -41,7 +41,7 @@ export default function Item(props) {
                     status={ myContext.checked === 4 ? 'checked' : 'unchecked' }
                     onPress={() => myContext.setCheckedNumber(4)}
                 />
-                <Text>{props.answers[3]}</Text>
+                <Text style={styles.item_text}>{props.answers[3]}</Text>
             </View>
         </View>
     );
@@ -49,5 +49,9 @@ export default function Item(props) {
 const styles = StyleSheet.create({
     contentView: {
         marginBottom: 10
+    },
+    item_text:{
+        fontFamily:"Pixel",
+        fontSize: 18
     }
 })

@@ -9,7 +9,8 @@ export default function Title(props) {
 }
  const styles = StyleSheet.create({
     header: {
-        fontSize: 17, 
+        fontFamily: "Pixel",
+        fontSize: 20, 
         fontWeight: 'bold', 
         marginBottom: 10,
         fontStyle: 'Arial'

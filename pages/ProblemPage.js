@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Title from "../component/Title";
 import { doc, getDoc} from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
-import { View , StyleSheet, Text, Button, Image} from "react-native";
+import { View , StyleSheet, Text, Button, Image, Modal} from "react-native";
 import { db } from '../firebaseConfig'
 import Item from "../component/Item";
 import ConfirmPage from "./ConfirmPage";
@@ -18,7 +18,8 @@ export default function ProblemPage({route}) {
           try {
             console.log("[Info]회차: "+route.params.name)
             const docRef = doc(db,'past_questions', `${route.params.name}`);
-            const docSnap = await getDoc(docRef);          
+            const docSnap = await getDoc(docRef);     
+            console.log(myContext.isConfirm)     
 
             if(docSnap.exists()){
                 const tempArr = [];
@@ -38,8 +39,8 @@ export default function ProblemPage({route}) {
         readDB();
       }, []);
 
-      const confirmation = () => {
-        myContext.setConfirm(true);
+      const confirmation = (value) => {
+        myContext.setConfirm(value);
       }
 
       const handleGetDownloadURL = (idx) => {
@@ -68,12 +69,21 @@ export default function ProblemPage({route}) {
                 <Title idx={myContext.index + 1} question={myContext.data[myContext.index].question} />
                 {myContext.data[myContext.index].image === true ? handleGetDownloadURL((myContext.index + 1)): null }
                 <Item answers = {myContext.data[myContext.index].answers}/>
-                <Button title="정답 확인" onPress={confirmation} disabled={myContext.isConfirm}/>
+                <Button color='#0008f0' title="정답 확인" onPress={() => confirmation(true)} disabled={myContext.isConfirm}/>
             </View>
           )}
 
           {/* 정답 확인 시 모달 창 출력 */}
-          {myContext.isConfirm ? <ConfirmPage correct = {myContext.data[myContext.index].result}/> : null}
+          {myContext.isConfirm ?   
+            <View style={{marginTop: 400}}>
+              <Modal 
+                animationType="slide"
+                visible={myContext.isConfirm}
+                transparent={true}>
+                <ConfirmPage correct = {myContext.data[myContext.index].result}/> 
+              </Modal>
+            </View>
+          : null}
         </View>
       );
 }
@@ -83,7 +93,7 @@ const styles = StyleSheet.create({
     flex:1,
     width: 'auto',
     alignItems:'center',
-    backgroundColor: '#dcdcdc'
+    backgroundColor: '#c9c9c9'
   },
   imageView: {
     flex: 1,
@@ -92,5 +102,5 @@ const styles = StyleSheet.create({
   image: {
     width: 400,
     height: 400
-  }
+  },
 })
