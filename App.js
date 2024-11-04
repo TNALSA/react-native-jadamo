@@ -8,6 +8,8 @@ import ChoosePage from './pages/ChoosePage';
 import ProblemPage from './pages/ProblemPage'
 import AppContext from './Appcontext';
 import { useFonts } from 'expo-font';
+import ResultPage from './pages/ResultPage';
+import ConfirmPage from './pages/ConfirmPage';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,7 @@ export default function App() {
   const [data,setData] = useState([]);
   const [isConfirm, setIsConfirm] = useState(false);
   const [index, setIndex] = useState(0);
+  const [score, setScore] = useState(0);
   const [fontsLoaded] = useFonts({
     Pixel: require("./assets/fonts/DungGeunMo.ttf")
   });
@@ -41,6 +44,11 @@ export default function App() {
     setData(value);
   }
 
+  const setCountScore = () => {
+    console.log("SetCountScore() 호출, 현재 score: "+score)
+    setScore(score + 1)
+  }
+
   const values = {
     checked: checked,
     index: index,
@@ -48,11 +56,13 @@ export default function App() {
     isConfirm: isConfirm,
     data: data,
     fontsLoaded: fontsLoaded,
+    score: score,
     setConfirm,
     setImageURL,
     setIdx,
     setCheckedNumber,
-    setQuestionData
+    setQuestionData,
+    setCountScore
   }
 
   return (
@@ -63,6 +73,8 @@ export default function App() {
             <Stack.Screen name = "StartPage" component={ StartPage }/>
             <Stack.Screen name = "ChoosePage" component = {ChoosePage}/>
             <Stack.Screen name = "ProblemPage" component = {ProblemPage}/>
+            <Stack.Screen name = "ConfirmPage" component = {ConfirmPage}/>
+            <Stack.Screen name = "ResultPage" component = {ResultPage}/>
           </Stack.Navigator>
         </NavigationContainer>
       </>

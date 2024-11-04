@@ -69,7 +69,7 @@ export default function ProblemPage({route}) {
                 <Title idx={myContext.index + 1} question={myContext.data[myContext.index].question} />
                 {myContext.data[myContext.index].image === true ? handleGetDownloadURL((myContext.index + 1)): null }
                 <Item answers = {myContext.data[myContext.index].answers}/>
-                <Button color='#0008f0' title="정답 확인" onPress={() => confirmation(true)} disabled={myContext.isConfirm}/>
+                <Button color='#0008f0' title="정답 확인" onPress={() => confirmation(true)} disabled={myContext.isConfirm}/>  
             </View>
           )}
 

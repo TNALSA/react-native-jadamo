@@ -13,6 +13,5 @@ export default function Title(props) {
         fontSize: 20, 
         fontWeight: 'bold', 
         marginBottom: 10,
-        fontStyle: 'Arial'
     }
  })
