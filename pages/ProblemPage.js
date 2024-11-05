@@ -14,29 +14,29 @@ export default function ProblemPage({route}) {
     const myContext = useContext(AppContext);
 
     useEffect(() => {
-        const readDB = async() => {      
-          try {
-            console.log("[Info]회차: "+route.params.name)
-            const docRef = doc(db,'past_questions', `${route.params.name}`);
-            const docSnap = await getDoc(docRef);     
-            console.log(myContext.isConfirm)     
+        // const readDB = async() => {      
+        //   try {
+        //     console.log("[Info]회차: "+route.params.name)
+        //     const docRef = doc(db,'past_questions', `${route.params.name}`);
+        //     const docSnap = await getDoc(docRef);     
+        //     console.log(myContext.isConfirm)     
 
-            if(docSnap.exists()){
-                const tempArr = [];
-                for(let i=1; i<=50; i++){
-                  console.log("[Info]문제: " + docSnap.get(`${i}`));
-                  tempArr.push(docSnap.get(`${i}`))
-                }
-                myContext.setQuestionData(tempArr);
-            }else{
-                console.log("[Warn]No such document!")
-            }
-          } catch (error) {
-            console.log(error.message);
-          }
-        }
+        //     if(docSnap.exists()){
+        //         const tempArr = [];
+        //         for(let i=1; i<=50; i++){
+        //           console.log("[Info]문제: " + docSnap.get(`${i}`));
+        //           tempArr.push(docSnap.get(`${i}`))
+        //         }
+        //         myContext.setQuestionData(tempArr);
+        //     }else{
+        //         console.log("[Warn]No such document!")
+        //     }
+        //   } catch (error) {
+        //     console.log(error.message);
+        //   }
+        // }
     
-        readDB();
+        myContext.readDoc(route.params.name);
       }, []);
 
       const confirmation = (value) => {
