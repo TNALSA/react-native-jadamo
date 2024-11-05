@@ -80,7 +80,7 @@ export default function ProblemPage({route}) {
                 animationType="slide"
                 visible={myContext.isConfirm}
                 transparent={true}>
-                <ConfirmPage correct = {myContext.data[myContext.index].result}/> 
+                <ConfirmPage correct = {myContext.data[myContext.index].result} navigation = {route.params.navigation}/> 
               </Modal>
             </View>
           : null}

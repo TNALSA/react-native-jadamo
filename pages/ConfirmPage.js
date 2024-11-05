@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Button, Modal } from "react-native"
 import AppContext from "../Appcontext"
 
 
-export default function ConfirmPage(props, { navigation }){
+export default function ConfirmPage(props){
     const myContext = useContext(AppContext);
 
     const handleNext = () => {
@@ -33,8 +33,8 @@ export default function ConfirmPage(props, { navigation }){
                 <View style={styles.nextBtnView}>
                     <Button title="결과 확인" color='#0008f0' onPress={() => 
                     {   
-                        myContext.setCountScore();
-                        navigation.navigate("ResultPage");
+                        handleNext();
+                        props.navigation.navigate("ResultPage");
                     }}/>
                 </View>
                 :
