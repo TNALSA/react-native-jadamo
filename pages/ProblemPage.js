@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Title from "../component/Title";
-import { doc, getDoc} from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
-import { View , StyleSheet, Text, Button, Image, Modal} from "react-native";
-import { db } from '../firebaseConfig'
+import { View , StyleSheet,Button, Image, Modal, Dimensions} from "react-native";
 import Item from "../component/Item";
 import ConfirmPage from "./ConfirmPage";
 import App from "../App";
@@ -13,29 +11,9 @@ import AppContext from "../Appcontext";
 export default function ProblemPage({route}) {
     const myContext = useContext(AppContext);
 
-    useEffect(() => {
-        // const readDB = async() => {      
-        //   try {
-        //     console.log("[Info]회차: "+route.params.name)
-        //     const docRef = doc(db,'past_questions', `${route.params.name}`);
-        //     const docSnap = await getDoc(docRef);     
-        //     console.log(myContext.isConfirm)     
+    const { width, height } = Dimensions.get('window');
 
-        //     if(docSnap.exists()){
-        //         const tempArr = [];
-        //         for(let i=1; i<=50; i++){
-        //           console.log("[Info]문제: " + docSnap.get(`${i}`));
-        //           tempArr.push(docSnap.get(`${i}`))
-        //         }
-        //         myContext.setQuestionData(tempArr);
-        //     }else{
-        //         console.log("[Warn]No such document!")
-        //     }
-        //   } catch (error) {
-        //     console.log(error.message);
-        //   }
-        // }
-    
+    useEffect(() => {
         myContext.readDoc(route.params.name);
       }, []);
 
@@ -65,7 +43,7 @@ export default function ProblemPage({route}) {
       return(
         <View style={styles.container}>   
           {myContext.data.length > 0 && myContext.index < myContext.data.length && (
-            <View>
+            <View style={styles.contentView}>
                 <Title idx={myContext.index + 1} question={myContext.data[myContext.index].question} />
                 {myContext.data[myContext.index].image === true ? handleGetDownloadURL((myContext.index + 1)): null }
                 <Item answers = {myContext.data[myContext.index].answers}/>
@@ -91,16 +69,19 @@ export default function ProblemPage({route}) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    width: 'auto',
+    width: "100%",
     alignItems:'center',
     backgroundColor: '#c9c9c9'
+  },
+  contentView: {
+    width: '100%', // 전체 너비 사용
   },
   imageView: {
     flex: 1,
     alignItems: 'center'
   },
   image: {
-    width: 400,
-    height: 400
+    width: Dimensions.get('screen').width * 0.9, // 화면 너비의 90% 비율
+    height: Dimensions.get('window').height * 0.4
   },
 })

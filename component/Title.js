@@ -1,10 +1,10 @@
-import { StyleSheet, Button, View, Text } from 'react-native';
+import { StyleSheet, Button, View, Text, SafeAreaView } from 'react-native';
 
 export default function Title(props) {
     return(
-        <View>
+        <SafeAreaView>
             <Text style={styles.header}>{props.idx}. {props.question}</Text>
-        </View>
+        </SafeAreaView>
     )
 }
  const styles = StyleSheet.create({
